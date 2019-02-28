@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package sample;
+
+import "sample/message.proto";
+import "google/api/annotations.proto";
+
+service TestService {
+  rpc TestEndpoint (TestEndpointRequest) returns (TestEndpointResponse) {
+    option (google.api.http) = {
+      get: "/testbefore/{id}/after"
+    };
+  }
+}
+
+message TestEndpointRequest {
+  string id = 1;
+}
+
+message TestEndpointResponse {
+  sample.TestMessage message = 1;
+}

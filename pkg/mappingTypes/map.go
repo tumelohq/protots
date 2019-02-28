@@ -2,7 +2,7 @@ package mappingTypes
 
 import "fmt"
 
-func MapType(grpcType string, repeated bool) (string) {
+func MapType(grpcType string, repeated bool) string {
 	typescriptType := mapType(grpcType)
 	if repeated {
 		return fmt.Sprintf("Array<%s>", typescriptType)
@@ -10,7 +10,7 @@ func MapType(grpcType string, repeated bool) (string) {
 	return typescriptType
 }
 
-func mapType(grpcType string) (typescriptType string) {
+func mapType(grpcType string) string {
 	m := map[string]string{
 		"string": "string",
 		"bool":   "boolean",

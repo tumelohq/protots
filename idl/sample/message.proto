@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package sample;
+
+// Account is the account details that should be made visible to the user
+message TestMessage {
+  string id = 1;
+  bool boolean = 2;
+  int32 int32type = 3;
+  int64 int64type = 4;
+}
