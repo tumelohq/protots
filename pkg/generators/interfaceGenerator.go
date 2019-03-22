@@ -3,6 +3,7 @@ package generators
 import (
 	"fmt"
 	"github.com/emicklei/proto"
+	"log"
 )
 
 // MessageGenerator generates the messages
@@ -25,6 +26,11 @@ type InterfaceVisitor struct {
 }
 
 func (InterfaceVisitor) VisitRPC(r *proto.RPC) {
-	printCommentLines(r.Comment.Lines, 1)
+	log.Printf("pre printing comments for %s", r.Name)
+	if r.Comment != nil {
+		if r.Comment.Lines != nil {
+			printCommentLines(r.Comment.Lines, 1)
+		}
+	}
 	writerString(fmt.Sprintf("\t%s(arg: %s): Promise<%s> \n", r.Name, r.RequestType, r.ReturnsType))
 }

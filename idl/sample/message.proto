@@ -8,4 +8,11 @@ message TestMessage {
   bool boolean = 2;
   int32 int32type = 3;
   int64 int64type = 4;
+  TestEnum enum = 5;
+}
+
+// Enum type
+enum TestEnum {
+  TEST_ENUM_1 = 0;
+  TEST_ENUM_2 = 2;
 }

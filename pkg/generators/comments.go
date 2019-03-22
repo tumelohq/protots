@@ -1,8 +1,12 @@
 package generators
 
-import "io"
+import (
+	"io"
+	"log"
+)
 
 func printCommentLines(ins []string, numberOfTabs int) {
+	log.Printf("printing comments for")
 	out := ""
 	for _, in := range ins {
 		for i := 0; i < numberOfTabs; i++ {
@@ -12,6 +16,7 @@ func printCommentLines(ins []string, numberOfTabs int) {
 	}
 	_, err := io.WriteString(writer, out)
 	if err != nil {
-		panic(err)
+		log.Printf("error trying to print comments %s", ins)
+		log.Fatal(err)
 	}
 }

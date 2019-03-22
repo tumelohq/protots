@@ -20,6 +20,7 @@ type Generator func(p *proto.Proto)
 func writerString(s string) {
 	_, err := io.WriteString(writer, s)
 	if err != nil {
+		log.Printf("trying to print %s", s)
 		log.Fatal(err)
 	}
 }

@@ -5,6 +5,7 @@ import (
 	"github.com/emicklei/proto"
 	"io"
 	"protots/pkg/mappingTypes"
+	"strings"
 )
 
 // MessageGenerator generates the messages
@@ -13,7 +14,11 @@ func MessageGenerator(p *proto.Proto) {
 }
 
 func message(m *proto.Message) {
-	printCommentLines(m.Comment.Lines, 0)
+	if m.Comment != nil {
+		if m.Comment.Lines != nil {
+			printCommentLines(m.Comment.Lines, 1)
+		}
+	}
 	_, err := io.WriteString(writer, fmt.Sprintf("export interface %s {\n", m.Name))
 	if err != nil {
 		panic(err)
@@ -34,7 +39,8 @@ type messageVisitor struct {
 
 func (messageVisitor) VisitNormalField(f *proto.NormalField) {
 	field := mappingTypes.MapType(f.Type, f.Repeated)
-	_, err := io.WriteString(writer, fmt.Sprintf("\t%s: %s\n", f.Name, field))
+	s := strings.Split(field, ".")
+	_, err := io.WriteString(writer, fmt.Sprintf("\t%s: %s\n", f.Name, s[len(s)-1]))
 	if err != nil {
 		panic(err)
 	}

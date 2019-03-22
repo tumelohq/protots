@@ -33,7 +33,7 @@ func genFile(inputFilePath string, outputFilePath string) {
 	}
 	defer f.Close()
 	generators.Generate(definition, f, []generators.Generator{
-		generators.ImportGenerator,
+		generators.ImportGenerator(inputFilePath),
 		generators.InterfaceGenerator,
 		generators.ClassGenerator,
 		generators.MessageGenerator,

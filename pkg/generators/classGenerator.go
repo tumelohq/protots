@@ -29,7 +29,11 @@ type classVisitor struct {
 func (classVisitor) VisitRPC(r *proto.RPC) {
 	httpAPI, position := googlehttpapi.DoesRPCContainGoogleHTTPAPI(r)
 	if httpAPI {
-		printCommentLines(r.Comment.Lines, 1)
+		if r.Comment != nil {
+			if r.Comment.Lines != nil {
+				printCommentLines(r.Comment.Lines, 1)
+			}
+		}
 		writerString(fmt.Sprintf("\t%s(arg: %s): Promise<%s>{ \n", r.Name, r.RequestType, r.ReturnsType))
 		option := r.Options[position].AggregatedConstants[0]
 		// Building url
