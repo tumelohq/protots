@@ -40,7 +40,7 @@ var genfolderCmd = &cobra.Command{
 		}
 		fmt.Println(tsFiles)
 		for _, path := range tsFiles {
-			genFile(path, outputFilenameForFolderGen(path))
+			genFile(args[0], path, outputFilenameForFolderGen(path))
 		}
 	},
 }

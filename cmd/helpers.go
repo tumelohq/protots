@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func genFile(inputFilePath string, outputFilePath string) {
+func genFile(rootFilePath string, inputFilePath string, outputFilePath string) {
 	reader, err := os.Open(inputFilePath)
 	if err != nil {
 		log.Fatal(err)
@@ -33,7 +33,7 @@ func genFile(inputFilePath string, outputFilePath string) {
 	}
 	defer f.Close()
 	generators.Generate(definition, f, []generators.Generator{
-		generators.ImportGenerator(inputFilePath),
+		generators.ImportGenerator(rootFilePath),
 		generators.InterfaceGenerator,
 		generators.ClassGenerator,
 		generators.MessageGenerator,
@@ -45,13 +45,10 @@ const typescriptExtension = ".ts"
 const protoExtension = ".proto"
 
 func outputFilenameForSingleFile(input string) string {
-	if output == "" {
-		_, fileName := filepath.Split(input)
-		ext := filepath.Ext(input)
-		name := strings.TrimSuffix(fileName, ext)
-		return name + typescriptExtension
-	}
-	return output
+	_, fileName := filepath.Split(input)
+	ext := filepath.Ext(input)
+	name := strings.TrimSuffix(fileName, ext)
+	return name + typescriptExtension
 }
 
 func outputFilenameForFolderGen(input string) string {

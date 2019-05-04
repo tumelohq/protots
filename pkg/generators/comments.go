@@ -6,7 +6,6 @@ import (
 )
 
 func printCommentLines(ins []string, numberOfTabs int) {
-	log.Printf("printing comments for")
 	out := ""
 	for _, in := range ins {
 		for i := 0; i < numberOfTabs; i++ {
