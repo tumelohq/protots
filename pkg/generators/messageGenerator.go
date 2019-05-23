@@ -1,11 +1,12 @@
 package generators
 
 import (
-	"fmt"
+	"bytes"
 	"github.com/emicklei/proto"
-	"io"
+	"log"
 	"protots/pkg/mappingTypes"
 	"strings"
+	"text/template"
 )
 
 // MessageGenerator generates the messages
@@ -13,35 +14,50 @@ func MessageGenerator(p *proto.Proto) {
 	proto.Walk(p, proto.WithMessage(message))
 }
 
+type messageTemplateType struct {
+	Name   string
+	Fields []messageTemplateFieldName
+}
+
+type messageTemplateFieldName struct {
+	Name string
+	Type string
+}
+
+var messageTemplateString = `export interface {{.Name}} {
+{{range .Fields}}	{{.Name}}: {{.Type}},
+{{end}}}
+`
+
 func message(m *proto.Message) {
 	if m.Comment != nil {
 		if m.Comment.Lines != nil {
 			printCommentLines(m.Comment.Lines, 1)
 		}
 	}
-	_, err := io.WriteString(writer, fmt.Sprintf("export interface %s {\n", m.Name))
-	if err != nil {
-		panic(err)
-	}
-	visitor := messageVisitor{}
+	var templateMessage messageTemplateType
+	templateMessage.Name = m.Name
 	for _, e := range m.Elements {
-		e.Accept(visitor)
+		switch e.(type) {
+		case *proto.NormalField:
+			f := e.(*proto.NormalField)
+
+			field := mappingTypes.MapType(f.Type, f.Repeated)
+			s := strings.Split(field, ".")
+
+			templateMessage.Fields = append(templateMessage.Fields, messageTemplateFieldName{Name: f.Name, Type: s[len(s)-1]})
+
+		default:
+			log.Fatalf("%+v could not be mapped to normal field", e)
+		}
+
 	}
-	_, err = io.WriteString(writer, fmt.Sprintf("}\n\n"))
+	t := template.Must(template.New("").Parse(messageTemplateString))
+	buf := new(bytes.Buffer)
+	err := t.Execute(buf, templateMessage)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
+	writerString(buf.String())
 }
 
-type messageVisitor struct {
-	BaseVisitor
-}
-
-func (messageVisitor) VisitNormalField(f *proto.NormalField) {
-	field := mappingTypes.MapType(f.Type, f.Repeated)
-	s := strings.Split(field, ".")
-	_, err := io.WriteString(writer, fmt.Sprintf("\t%s: %s\n", f.Name, s[len(s)-1]))
-	if err != nil {
-		panic(err)
-	}
-}

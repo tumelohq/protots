@@ -3,8 +3,8 @@ package generators
 import (
 	"fmt"
 	"github.com/emicklei/proto"
-	"protots/pkg/googlehttpapi"
 	"log"
+	"protots/pkg/googlehttpapi"
 )
 
 // MessageGenerator generates the messages
@@ -21,10 +21,20 @@ func classFunc(r *proto.Service) {
 }
 
 type classVisitor struct {
-	BaseVisitor
+	Base
 }
 
 // TODO Check if there are any google.http.api functions
+
+type classTemplateType struct {
+	ClassName          string
+	ImplementedService string
+}
+
+var classTemplateString = `export class {{.ClassName}} extends ProtoAPIService implements {{.ImplementedService}}{
+{{range .Fields}}	{{.}} = "{{.}}",
+{{end}}}
+`
 
 func (classVisitor) VisitRPC(r *proto.RPC) {
 	httpAPI, position := googlehttpapi.DoesRPCContainGoogleHTTPAPI(r)
@@ -47,4 +57,3 @@ func (classVisitor) VisitRPC(r *proto.RPC) {
 		writerString(fmt.Sprintf("\t}\n\n"))
 	}
 }
-

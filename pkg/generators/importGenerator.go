@@ -30,7 +30,7 @@ func ImportGenerator(rootPath string) func(p *proto.Proto) {
 func importFunc(roootPath string, i *proto.Import) {
 	path := filepath.Join(roootPath, i.Filename)
 
-	if strings.Contains(path, "/google/protobuf/timestamp.proto"){
+	if strings.Contains(path, "/google/protobuf/timestamp.proto") {
 		return
 	}
 

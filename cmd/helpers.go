@@ -22,7 +22,7 @@ func genFile(rootFilePath string, inputFilePath string, outputFilePath string) {
 		log.Fatal(err)
 	}
 	if _, err := os.Stat(outputFilePath); os.IsNotExist(err) {
-		err := os.MkdirAll(filepath.Dir(outputFilePath), os.ModePerm);
+		err := os.MkdirAll(filepath.Dir(outputFilePath), os.ModePerm)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -91,7 +91,7 @@ const packageJSONFile = `{
 func generatePackageJSONFile() error {
 	path := "gen/pkg.json"
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		err := os.MkdirAll(filepath.Dir(path), os.ModePerm);
+		err := os.MkdirAll(filepath.Dir(path), os.ModePerm)
 		if err != nil {
 			log.Fatal(err)
 		}

@@ -3,7 +3,6 @@ package generators
 import (
 	"fmt"
 	"github.com/emicklei/proto"
-	"log"
 )
 
 // MessageGenerator generates the messages
@@ -22,11 +21,10 @@ func interfaceFunc(r *proto.Service) {
 // TODO Need to check if it http api google exists
 
 type InterfaceVisitor struct {
-	BaseVisitor
+	Base
 }
 
 func (InterfaceVisitor) VisitRPC(r *proto.RPC) {
-	log.Printf("pre printing comments for %s", r.Name)
 	if r.Comment != nil {
 		if r.Comment.Lines != nil {
 			printCommentLines(r.Comment.Lines, 1)

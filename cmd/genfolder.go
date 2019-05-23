@@ -45,7 +45,6 @@ var genfolderCmd = &cobra.Command{
 	},
 }
 
-
 func init() {
 	rootCmd.AddCommand(genfolderCmd)
 }

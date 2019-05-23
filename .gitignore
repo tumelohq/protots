@@ -1,6 +1,7 @@
 ### ProtoTS
 
 gen/
+typescript/dist
 
 ### IntelliJ
 .idea/

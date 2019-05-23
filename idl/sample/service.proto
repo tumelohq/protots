@@ -6,9 +6,14 @@ import "sample/message.proto";
 import "google/api/annotations.proto";
 
 service TestService {
-  rpc TestEndpoint (TestEndpointRequest) returns (TestEndpointResponse) {
+  rpc TestEndpointGet (TestEndpointRequest) returns (TestEndpointResponse) {
     option (google.api.http) = {
       get: "/testbefore/{id}/after"
+    };
+  }
+  rpc TestEndpointPost (TestEndpointRequest) returns (TestEndpointResponse) {
+    option (google.api.http) = {
+      post: "/testbefore/{id}/after"
     };
   }
 }
