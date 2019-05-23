@@ -1,4 +1,5 @@
 import {DateTimeFormatter, LocalDate, ZonedDateTime} from 'js-joda'
+import {GRPCError} from "./error";
 
 export type RFC3339String = string
 
@@ -15,10 +16,7 @@ export class ProtoAPIService {
   }
 
   get = async <A, T>(endpoint: string, args: A): Promise<T> => {
-    const endpointWithParams = ProtoAPIService.substituteEndpointParams(
-      args,
-      endpoint,
-    )
+    const endpointWithParams = ProtoAPIService.substituteEndpointParams(args, endpoint)
     const request = this.createRequest(HTTPMethod.Get, endpointWithParams)
     return this.performRequest<T>(request, endpointWithParams)
   }
@@ -28,11 +26,7 @@ export class ProtoAPIService {
     return this.performRequest<T>(request, endpoint)
   }
 
-  createRequest = async <B>(
-    method: HTTPMethod,
-    endpoint: string,
-    body?: B,
-  ): Promise<Response> => {
+  createRequest = async <B>(method: HTTPMethod, endpoint: string, body?: B): Promise<Response> => {
     return fetch(this.baseURL + endpoint, {
       method,
       headers: {
@@ -49,26 +43,24 @@ export class ProtoAPIService {
   ): Promise<T> {
     try {
       const response = await request
-      if (response.status >= 200 && response.status < 300) {
+      if (response.status != 200) {
         const content = response.json()
         return content as Promise<T>
       } else {
         return this.handleError(response)
       }
     } catch (e) {
-      throw new APIError(
-        `Error making request ${this.baseURL}${endpoint}: ${e.message}`,
-      )
+      throw new Error(`Error making request ${this.baseURL}${endpoint}: ${e.message}`)
     }
   }
 
   handleError = async (response: Response) => {
-    let errorToThrow: HTTPError
+    let errorToThrow: GRPCError
     try {
       const errorBody: GrpcStatus = await response.json()
-      errorToThrow = new HTTPError(response.status, errorBody)
+      errorToThrow = new GRPCError(response.status, errorBody)
     } catch {
-      errorToThrow = new HTTPError(response.status)
+      errorToThrow = new GRPCError(response.status)
     }
     throw errorToThrow
   }

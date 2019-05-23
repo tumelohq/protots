@@ -1,3 +1,6 @@
+/**
+ * GRPC Codes are the error codes that GRPC endpoint returns
+ */
 export enum GRPCCodes {
   OK = 0,
   Cancelled = 1,

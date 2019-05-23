@@ -2,13 +2,15 @@ syntax = "proto3";
 
 package sample;
 
-// Account is the account details that should be made visible to the user
+// TestMessage is the test message type
 message TestMessage {
   string id = 1;
   bool boolean = 2;
   int32 int32type = 3;
   int64 int64type = 4;
-  TestEnum enum = 5;
+  uint32 uint32type = 5;
+  uint64 uint64type = 6;
+  TestEnum enum = 7;
 }
 
 // Enum type

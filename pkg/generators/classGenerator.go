@@ -7,31 +7,36 @@ import (
 	"protots/pkg/googlehttpapi"
 )
 
-// MessageGenerator generates the messages
+// ClassGenerator generates the class for the particular service only if there is a google http api function in it.
 func ClassGenerator(p *proto.Proto) {
+	// TODO Remove walk
 	proto.Walk(p, proto.WithService(classFunc))
 }
 
-func classFunc(r *proto.Service) {
-	writerString(fmt.Sprintf("export class %s extends ProtoAPIService implements %s{\n", r.Name, r.Name))
-	for _, element := range r.Elements {
-		element.Accept(classVisitor{})
+func classFunc(s *proto.Service) {
+	if googlehttpapi.DoesServiceContainGoogleHTTPAPIRPCs(s) {
+		writerString(fmt.Sprintf("export class %s extends ProtoAPIService implements %s{\n", s.Name, s.Name))
+		for _, element := range s.Elements {
+			element.Accept(classVisitor{})
+		}
+		writerString(fmt.Sprintf("}\n"))
 	}
-	writerString(fmt.Sprintf("}\n"))
 }
 
 type classVisitor struct {
 	Base
 }
 
-// TODO Check if there are any google.http.api functions
-
 type classTemplateType struct {
 	ClassName          string
+	Comments           []string
 	ImplementedService string
 }
 
-var classTemplateString = `export class {{.ClassName}} extends ProtoAPIService implements {{.ImplementedService}}{
+const classTemplateString = `
+{{range .Comments}}
+//{{.}}{{end}}
+export class {{.ClassName}} extends ProtoAPIService implements {{.ImplementedService}}{
 {{range .Fields}}	{{.}} = "{{.}}",
 {{end}}}
 `

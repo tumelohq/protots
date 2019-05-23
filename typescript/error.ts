@@ -11,7 +11,9 @@ export interface GRPCStatus {
   details?: any[]
 }
 
-
+/**
+ *
+ */
 export class GRPCError extends ExtendableError {
   readonly grpcStatus: GRPCStatus
 
@@ -19,4 +21,12 @@ export class GRPCError extends ExtendableError {
     super(`${JSON.stringify(errorBody)}`)
     this.grpcStatus = errorBody
   }
+}
+
+
+/**
+ *
+ */
+export class HTTPError extends ExtendableError {
+
 }

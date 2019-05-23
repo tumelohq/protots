@@ -18,6 +18,10 @@ service TestService {
   }
 }
 
+service TestServiceToIgnore {
+  rpc TestEndpointGet (TestEndpointRequest) returns (TestEndpointResponse)
+}
+
 message TestEndpointRequest {
   string id = 1;
 }

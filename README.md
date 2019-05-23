@@ -15,3 +15,8 @@ protots genfolder sample/
 ```
 
 This will generate the files and place them into a `gen/` folder.
+
+
+### TODO 
+
+* Add maps 

@@ -12,9 +12,6 @@ import (
 
 // MessageGenerator generates the messages
 func ImportGenerator(rootPath string) func(p *proto.Proto) {
-
-	log.Println(rootPath)
-
 	return func(p *proto.Proto) {
 		for _, element := range p.Elements {
 			if im, ok := element.(*proto.Import); ok {
