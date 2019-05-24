@@ -1,7 +1,7 @@
 ### ProtoTS
 
 gen/
-typescript/dist
+base/dist
 
 ### IntelliJ
 .idea/

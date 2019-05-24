@@ -1,11 +1,11 @@
 {
-  "name": "protots",
+  "name": "@tumelohq/protots-base",
   "version": "0.0.1",
-  "description": "protots \"compiles\" GRPC-based REST endpoints files.",
+  "description": "protots-base contains the base classes to be used with protots",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "rm -rf dist && tsc"
   },
   "repository": {
     "type": "git",
