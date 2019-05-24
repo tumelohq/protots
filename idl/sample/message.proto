@@ -13,6 +13,13 @@ message TestMessage {
   TestEnum enum = 7;
 }
 
+message WithoutComment {
+  string id = 1;
+}
+
+message EmptyType {
+}
+
 // Enum type
 enum TestEnum {
   TEST_ENUM_1 = 0;

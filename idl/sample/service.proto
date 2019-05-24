@@ -18,9 +18,7 @@ service TestService {
   }
 }
 
-service TestServiceToIgnore {
-  rpc TestEndpointGet (TestEndpointRequest) returns (TestEndpointResponse)
-}
+// TODO Handle case of other service
 
 message TestEndpointRequest {
   string id = 1;

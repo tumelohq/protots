@@ -12,7 +12,9 @@ func EnumGenerator(p *proto.Proto) {
 	proto.Walk(p, proto.WithEnum(func(e *proto.Enum) {
 		var templateType enumTemplateType
 		templateType.Name = e.Name
-		templateType.Comments = e.Comment.Lines
+		if e.Comment != nil {
+			templateType.Comments = e.Comment.Lines
+		}
 		for _, e := range e.Elements {
 			switch e.(type) {
 			case *proto.EnumField:

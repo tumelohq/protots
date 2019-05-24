@@ -13,17 +13,18 @@ import (
 // generated
 func MessageGenerator(p *proto.Proto) {
 	proto.Walk(p, proto.WithMessage(func(m *proto.Message) {
-		if m.Comment != nil {
-			if m.Comment.Lines != nil {
-				printCommentLines(m.Comment.Lines, 1)
-			}
-		}
 		var templateMessage messageTemplateType
 		templateMessage.Name = m.Name
+		if m.Comment != nil {
+			templateMessage.Comments = m.Comment.Lines
+		}
 		for _, e := range m.Elements {
 			switch e.(type) {
 			case *proto.NormalField:
-				f := e.(*proto.NormalField)
+				f, ok := e.(*proto.NormalField)
+				if !ok {
+					log.Fatal("not no normal field")
+				}
 				field := mappingTypes.MapType(f.Type, f.Repeated)
 				s := strings.Split(field, ".")
 				templateMessage.Fields = append(templateMessage.Fields, messageTemplateFieldName{Name: f.Name, Type: s[len(s)-1]})
@@ -41,18 +42,21 @@ func MessageGenerator(p *proto.Proto) {
 	}))
 }
 
-const messageTemplateString = `export interface {{.Name}} {
+const messageTemplateString = `
+{{range .Comments}}
+//{{.}}{{end}}
+export interface {{.Name}} {
 {{range .Fields}}	{{.Name}}: {{.Type}},
 {{end}}}
 `
 
 type messageTemplateType struct {
-	Name   string
-	Fields []messageTemplateFieldName
+	Comments []string
+	Name     string
+	Fields   []messageTemplateFieldName
 }
 
 type messageTemplateFieldName struct {
 	Name string
 	Type string
 }
-
