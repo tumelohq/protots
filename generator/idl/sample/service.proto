@@ -5,7 +5,9 @@ package sample;
 import "sample/message.proto";
 import "google/api/annotations.proto";
 
+// TestService comments for testing
 service TestService {
+  // TestEndpointGet comment for testing
   rpc TestEndpointGet (TestEndpointRequest) returns (TestEndpointResponse) {
     option (google.api.http) = {
       get: "/testbefore/{id}/after"

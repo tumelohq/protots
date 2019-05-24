@@ -8,6 +8,8 @@ import (
 	"text/template"
 )
 
+// TODO Add comments to methods
+
 const classTemplateString = `
 {{range .Comments}}
 //{{.}}{{end}}
