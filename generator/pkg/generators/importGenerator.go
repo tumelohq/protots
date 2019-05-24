@@ -21,6 +21,7 @@ func ImportGenerator(rootPath string) func(p *proto.Proto) {
 			}
 		}
 		writerString(fmt.Sprintf("\n"))
+		writerString(`import {ProtoAPIService} from "@tumelohq/protots-base"`)
 	}
 }
 

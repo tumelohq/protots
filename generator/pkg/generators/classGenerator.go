@@ -104,4 +104,3 @@ func vistHTTPAPIRPC(r *proto.RPC) (out classTemplateFunctionType) {
 	out.HTTPMethod = option.Name
 	return out
 }
-}

@@ -7,7 +7,21 @@ import (
 	"text/template"
 )
 
-// EnumGenerator generates the messages
+const enumTemplateString = `
+{{range .Comments}}
+//{{.}}{{end}}
+export enum {{.Name}} {
+{{range .Fields}}	{{.}} = "{{.}}",
+{{end}}}
+`
+
+type enumTemplateType struct {
+	Name     string
+	Comments []string
+	Fields   []string
+}
+
+// EnumGenerator generates the enum types
 func EnumGenerator(p *proto.Proto) {
 	proto.Walk(p, proto.WithEnum(func(e *proto.Enum) {
 		var templateType enumTemplateType
@@ -33,17 +47,3 @@ func EnumGenerator(p *proto.Proto) {
 		writerString(buf.String())
 	}))
 }
-
-type enumTemplateType struct {
-	Name     string
-	Comments []string
-	Fields   []string
-}
-
-const enumTemplateString = `
-{{range .Comments}}
-//{{.}}{{end}}
-export enum {{.Name}} {
-{{range .Fields}}	{{.}} = "{{.}}",
-{{end}}}
-`

@@ -2,9 +2,17 @@
 
 protots "compiles" GRPC-based REST endpoints files.
 
-## Pronunciation
+## Setup
 
-Like tater tots, but pro-tots.
+protots is currently made up of two sections:
+
+### generator  
+
+The `generator` is the tool that "compiles" the proto to the functions to be used. 
+
+### base
+
+The base is an npm package that is used to support the proto functions. 
 
 ## Sample
 
