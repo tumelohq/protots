@@ -1,5 +1,5 @@
 import {DateTimeFormatter, LocalDate, ZonedDateTime} from 'js-joda'
-import {GRPCError} from "./error";
+import {GRPCError, GRPCStatus, HTTPError} from "./error";
 
 export type RFC3339String = string
 
@@ -55,12 +55,13 @@ export class ProtoAPIService {
   }
 
   handleError = async (response: Response) => {
-    let errorToThrow: GRPCError
+    let errorToThrow: HTTPError | GRPCError
     try {
-      const errorBody: GrpcStatus = await response.json()
-      errorToThrow = new GRPCError(response.status, errorBody)
+      const errorBody: GRPCStatus = await response.json()
+      errorToThrow = new GRPCError(errorBody)
     } catch {
-      errorToThrow = new GRPCError(response.status)
+      let body: string | undefined = response.body === null ? undefined : response.body.toString()
+      errorToThrow = new HTTPError(response.status, body)
     }
     throw errorToThrow
   }
