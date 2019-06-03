@@ -1,6 +1,8 @@
 ### ProtoTS
 
-gen/
+base/dist
+generator/idl
+generator/gen
 
 ### IntelliJ
 .idea/
