@@ -8,12 +8,13 @@ enum HTTPMethod {
   Post = 'POST',
 }
 
-// TODO Add ability to get headers
 export class ProtoAPIService {
   private readonly baseURL: string
+  private readonly getHeaders?: () => Promise<Map<string, string>>
 
-  constructor(baseURL: string) {
+  constructor(baseURL: string, getHeaders?: () => Promise<Map<string, string>>) {
     this.baseURL = baseURL
+    this.getHeaders = getHeaders
   }
 
   get = async <A, T>(endpoint: string, args: A): Promise<T> => {
@@ -28,11 +29,19 @@ export class ProtoAPIService {
   }
 
   createRequest = async <B>(method: HTTPMethod, endpoint: string, body?: B): Promise<Response> => {
+    let additionalHeaders: { [key: string]: string; } = {}
+    if (this.getHeaders != undefined) {
+      const map = await this.getHeaders()
+      map.forEach((v, k) => {
+        additionalHeaders[k] = v
+      })
+    }
     return fetch(this.baseURL + endpoint, {
       method,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        ...additionalHeaders,
       },
       body: body === undefined ? undefined : JSON.stringify(body),
     })
