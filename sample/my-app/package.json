@@ -4,7 +4,7 @@
   "private": true,
   "proxy": "http://localhost:9001/",
   "dependencies": {
-    "@tumelohq/protots-base": "0.0.2",
+    "@tumelohq/protots-base": "0.0.3",
     "@types/jest": "24.0.13",
     "@types/node": "12.0.2",
     "@types/react": "16.8.18",
