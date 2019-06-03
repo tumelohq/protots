@@ -8,13 +8,13 @@ import (
 	"text/template"
 )
 
-// TODO Add comments for methods
-
 const serviceInterfaceTemplate = `
 {{range .Comments}}
 //{{.}}{{end}}
 export interface {{.Name}} {
-{{range .Functions}}	{{.Name}}(arg: {{.Input}}):Promise<{{.Output}}>
+{{range .Functions}}
+	{{range .Comments}}//{{.}}{{end}}
+	{{.Name}}(arg: {{.Input}}):Promise<{{.Output}}>
 {{end}}
 }
 `
@@ -26,16 +26,17 @@ type serviceInterfaceType struct {
 }
 
 type serviceInterfaceFunction struct {
-	Name   string
-	Input  string
-	Output string
+	Comments []string
+	Name     string
+	Input    string
+	Output   string
 }
 
-// ServiceInterfaceGenerator generates interfaces for the proto services and their endpoints. Similarly to the
+// ServiceInterface generates interfaces for the proto services and their endpoints. Similarly to the
 // ClassGenerator, it only does so if there is an RPC endpoint with an google http api option. For services with a
 // combination of both RPCs with and without a google http api option, it will output the class but only with the RPCs
 // with a google http option.
-func ServiceInterfaceGenerator(p *proto.Proto) {
+func ServiceInterface(p *proto.Proto) {
 	for _, e := range p.Elements {
 		switch e.(type) {
 		case *proto.Service:
@@ -60,10 +61,15 @@ func serviceGeneratorHelperFunction(s *proto.Service) {
 		switch e.(type) {
 		case *proto.RPC:
 			r := e.(*proto.RPC)
+			var comments []string
+			if r.Comment != nil {
+				comments = r.Comment.Lines
+			}
 			templateOutput.Functions = append(templateOutput.Functions, serviceInterfaceFunction{
-				Name:   r.Name,
-				Input:  r.RequestType,
-				Output: r.ReturnsType,
+				Comments: comments,
+				Name:     r.Name,
+				Input:    r.RequestType,
+				Output:   r.ReturnsType,
 			})
 		default:
 			log.Fatalf("%+v unexpected type", e)

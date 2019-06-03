@@ -34,10 +34,10 @@ func genFile(rootFilePath string, inputFilePath string, outputFilePath string) {
 	defer f.Close()
 	generators.Generate(definition, f, []generators.Generator{
 		generators.ImportGenerator(rootFilePath),
-		generators.ServiceInterfaceGenerator,
-		generators.ClassGenerator,
+		generators.ServiceInterface,
+		generators.Class,
 		generators.MessageGenerator,
-		generators.EnumGenerator,
+		generators.Enum,
 	})
 }
 

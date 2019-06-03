@@ -8,6 +8,7 @@ enum HTTPMethod {
   Post = 'POST',
 }
 
+// TODO Add ability to get headers
 export class ProtoAPIService {
   private readonly baseURL: string
 
@@ -37,13 +38,10 @@ export class ProtoAPIService {
     })
   }
 
-  async performRequest<T>(
-    request: Promise<Response>,
-    endpoint: string,
-  ): Promise<T> {
+  async performRequest<T>(request: Promise<Response>, endpoint: string): Promise<T> {
     try {
       const response = await request
-      if (response.status != 200) {
+      if (response.status == 200) {
         const content = response.json()
         return content as Promise<T>
       } else {
@@ -70,9 +68,7 @@ export class ProtoAPIService {
     return DateTimeFormatter.ISO_LOCAL_DATE.format(localDate) + 'T00:00:00Z'
   }
 
-  static ZonedDateTimeFromRFC3339 = (
-    zonedTime: RFC3339String,
-  ): ZonedDateTime => {
+  static ZonedDateTimeFromRFC3339 = (zonedTime: RFC3339String,): ZonedDateTime => {
     return ZonedDateTime.parse(zonedTime)
   }
 
@@ -85,7 +81,8 @@ export class ProtoAPIService {
   // the value of the property in the endpoint will be replace, otherwise the param and
   // its value is added as a URL parameter. Returns a new endpoint with args substituted
   // with the URL params appended
-  static substituteEndpointParams = <A>(args: A, endpoint: string): string => {
+  // TODO NEED TO CHECK THAT ENDPOINTS ARE NOT ALREADY IN THE URL
+  public static substituteEndpointParams = <A>(args: A, endpoint: string): string => {
     let urlParams = ''
     let endpointResult = endpoint
     for (const arg in args) {
@@ -101,9 +98,7 @@ export class ProtoAPIService {
         }
       }
     }
-    return urlParams.length > 0
-      ? `${endpointResult}?${urlParams}`
-      : endpointResult
+    return urlParams.length > 0 ? `${endpointResult}?${urlParams}` : endpointResult
   }
 }
 

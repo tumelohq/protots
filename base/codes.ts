@@ -4,7 +4,7 @@
 export enum GRPCCodes {
   OK = 0,
   Cancelled = 1,
-  Uknown = 2,
+  Unknown = 2,
   InvalidArgument = 3,
   DeadlineExceeded = 4,
   NotFound = 5,
@@ -13,7 +13,7 @@ export enum GRPCCodes {
   ResourceExhausted = 8,
   FailedPrecondition = 9,
   Aborted = 10,
-  Uninmplemented = 12,
+  Unimplemented = 12,
   Internal = 13,
   Unavailable = 14,
   DataLoss = 15,

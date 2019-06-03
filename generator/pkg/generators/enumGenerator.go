@@ -21,8 +21,8 @@ type enumTemplateType struct {
 	Fields   []string
 }
 
-// EnumGenerator generates the enum types
-func EnumGenerator(p *proto.Proto) {
+// Enum generates the enum types
+func Enum(p *proto.Proto) {
 	proto.Walk(p, proto.WithEnum(func(e *proto.Enum) {
 		var templateType enumTemplateType
 		templateType.Name = e.Name

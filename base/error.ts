@@ -27,10 +27,12 @@ export class GRPCError extends ExtendableError {
  */
 export class HTTPError extends ExtendableError {
   readonly httpStatusCode: number
+  readonly httpBody: string
 
   constructor(httpStatusCode: number, errorBody: string | undefined) {
     errorBody = errorBody === undefined ? "" : errorBody
     super(`(HTTP ${httpStatusCode}): ${errorBody}`)
     this.httpStatusCode = httpStatusCode
+    this.httpBody = errorBody
   }
 }

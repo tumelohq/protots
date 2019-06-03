@@ -8,16 +8,17 @@ import (
 	"text/template"
 )
 
-// TODO Add comments to methods
-
 const classTemplateString = `
 {{range .Comments}}
 //{{.}}{{end}}
 export class {{.ClassName}} extends ProtoAPIService implements {{.ImplementedService}}{
-{{range .Functions}}	{{.Name}}(arg: {{.InputArgumentName}}): Promise<{{.OutputArgumentName}}>{
+{{range .Functions}}
+	{{range .Comments}}// {{.}}{{end}}
+	{{.Name}}(arg: {{.InputArgumentName}}): Promise<{{.OutputArgumentName}}>{
 		const u = {{.Source}}
 		return this.{{.HTTPMethod}}(u, arg)
-}
+	}
+
 {{end}}}
 `
 
@@ -37,10 +38,10 @@ type classTemplateFunctionType struct {
 	Source             string
 }
 
-// ClassGenerator generates the class for the service within the proto. It only does so if there is an RPC endpoint with
+// Class generates the class for the service within the proto. It only does so if there is an RPC endpoint with
 // an google http api option. For services with a combination of both RPCs with and without a google http api option,
 // it will output the class but only with the RPCs with a google http option.
-func ClassGenerator(p *proto.Proto) {
+func Class(p *proto.Proto) {
 	for _, e := range p.Elements {
 		switch e.(type) {
 		case *proto.Service:
