@@ -1,6 +1,6 @@
 {
   "name": "@tumelohq/protots-base",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "protots-base contains the base classes to be used with protots",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
