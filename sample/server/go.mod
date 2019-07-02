@@ -9,10 +9,10 @@ require (
 	github.com/google/btree v1.0.0 // indirect
 	github.com/google/go-cmp v0.3.0 // indirect
 	github.com/google/pprof v0.0.0-20190515194954-54271f7e092f // indirect
-	github.com/gorilla/handlers v1.4.0 // indirect
+	github.com/gorilla/handlers v1.4.0
 	github.com/grpc-ecosystem/grpc-gateway v1.9.0
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
-	github.com/kr/pty v1.1.4 // indirect
+	github.com/kr/pty v1.1.8 // indirect
 	github.com/rogpeppe/fastuuid v1.1.0 // indirect
 	github.com/unrolled/logger v0.0.0-20190327162521-be1a2406c7c9 // indirect
 	golang.org/x/crypto v0.0.0-20190513172903-22d7a77e9e5f // indirect
