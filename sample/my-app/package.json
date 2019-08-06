@@ -5,14 +5,14 @@
   "proxy": "http://localhost:9001/",
   "dependencies": {
     "@tumelohq/protots-base": "0.0.3",
-    "@types/jest": "^24.0.17",
-    "@types/node": "^12.6.9",
-    "@types/react": "^16.8.24",
-    "@types/react-dom": "^16.8.5",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "@types/jest": "24.0.17",
+    "@types/node": "12.6.9",
+    "@types/react": "16.8.24",
+    "@types/react-dom": "16.8.5",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
     "react-scripts": "3.0.1",
-    "typescript": "^3.5.3"
+    "typescript": "3.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
