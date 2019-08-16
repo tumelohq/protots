@@ -9,8 +9,8 @@ require (
 	github.com/google/btree v1.0.0 // indirect
 	github.com/google/go-cmp v0.3.0 // indirect
 	github.com/google/pprof v0.0.0-20190515194954-54271f7e092f // indirect
-	github.com/gorilla/handlers v1.4.0 // indirect
-	github.com/grpc-ecosystem/grpc-gateway v1.9.0
+	github.com/gorilla/handlers v1.4.0
+	github.com/grpc-ecosystem/grpc-gateway v1.9.6
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/kr/pty v1.1.4 // indirect
 	github.com/rogpeppe/fastuuid v1.1.0 // indirect
