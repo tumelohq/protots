@@ -28,7 +28,7 @@
     "ts-error": "^1.0.4"
   },
   "devDependencies": {
-    "@types/node": "^12.12.14",
-    "typescript": "^3.7.3"
+    "@types/node": "^13.1.2",
+    "typescript": "^3.7.4"
   }
 }
