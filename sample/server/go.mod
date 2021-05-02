@@ -26,7 +26,7 @@ require (
 	golang.org/x/text v0.3.2 // indirect
 	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4 // indirect
 	golang.org/x/tools v0.0.0-20190525145741-7be61e1b0e51 // indirect
-	google.golang.org/appengine v1.6.0 // indirect
+	google.golang.org/appengine v1.6.1 // indirect
 	google.golang.org/genproto v0.0.0-20190522204451-c2c4e71fbf69
 	google.golang.org/grpc v1.21.0
 	gopkg.in/yaml.v2 v2.2.2 // indirect
