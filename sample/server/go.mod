@@ -12,7 +12,7 @@ require (
 	github.com/gorilla/handlers v1.4.0
 	github.com/grpc-ecosystem/grpc-gateway v1.9.0
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
-	github.com/kr/pty v1.1.4 // indirect
+	github.com/kr/pty v1.1.8 // indirect
 	github.com/rogpeppe/fastuuid v1.1.0 // indirect
 	github.com/unrolled/logger v0.0.0-20190327162521-be1a2406c7c9 // indirect
 	golang.org/x/crypto v0.0.0-20190513172903-22d7a77e9e5f // indirect
